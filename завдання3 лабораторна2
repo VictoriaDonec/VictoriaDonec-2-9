@@ -1,0 +1,16 @@
+def equation(x):
+    return x**4 + 2*x**3 + 2*x**2 + 6*x - 5
+def derivative(x):
+    return 4*x**3 + 6*x**2 + 4*x + 6
+def newton_method(x0, tol, max_iter):
+    x = x0
+    iteration = 0
+    while abs(equation(x)) > tol and iteration < max_iter:
+        x = x - equation(x) / derivative(x)
+        iteration += 1 
+    return x
+initial_guess = 0.5
+tolerance = 0.0001
+max_iterations = 1000
+root = newton_method(initial_guess, tolerance, max_iterations)
+print("Корінь рівняння:", root)
