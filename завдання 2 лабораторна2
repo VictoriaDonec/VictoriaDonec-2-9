@@ -1,0 +1,21 @@
+def equation(x):
+    return x**4 + 2*x**3 + 2*x**2 + 6*x - 5
+def bisection_method(a, b, tol):
+    if equation(a) * equation(b) >= 0:
+        print("Метод бісекції не може гарантувати знаходження кореня в даному інтервалі.")
+        return None
+    while (b - a) / 2.0 > tol:
+        midpoint = (a + b) / 2.0
+        if equation(midpoint) == 0:
+            return midpoint
+        elif equation(a) * equation(midpoint) < 0:
+            b = midpoint
+        else:
+            a = midpoint
+    return (a + b) / 2.0
+interval = (-2, 2)
+tolerance = 0.0001
+root = bisection_method(interval[0], interval[1], tolerance)
+if root is not None:
+    print("Корінь рівняння:", root)
+
