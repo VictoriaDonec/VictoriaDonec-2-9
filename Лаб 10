@@ -1,0 +1,63 @@
+#МНК. Наближення параболой
+import numpy as np
+import matplotlib.pyplot as plt
+from scipy.optimize import least_squares
+def func(x):
+    return np.sin(4 * x)
+x = np.array([i * 0.1 for i in range(1, 11)])
+y = np.array([func(xi) for xi in x])
+print('x =', x)
+print('y =', y)
+def fun(a, x, y):
+    return a[0] + a[1] * x + a[2] * x**2 - y
+a0 = np.array([1, 1, 1])
+res_lsq = least_squares(fun, x0=a0, args=(x, y))
+print("a0 = %.2f, a1 = %.2f, a2 = %.2f" % tuple(res_lsq.x))
+f = lambda x: sum([u * v for u, v in zip(res_lsq.x, [1, x, x**2])])
+x_p = np.linspace(min(x), max(x), 100)
+y_p = f(x_p)
+plt.figure(figsize=(8, 6))
+plt.plot(x, y, 'o', label='f(x)')
+plt.plot(x_p, y_p, 'b', label='Апроксимована парабола')
+plt.title("Апроксимація функції за допомогою параболи")
+plt.xlabel('x')
+plt.ylabel('f(x)')
+plt.legend()
+plt.grid(True)
+plt.show()
+#МНК. Наближення прямою 
+import numpy as np
+import matplotlib.pyplot as plt
+from scipy.optimize import least_squares
+def func(x):
+    return np.sin(4 * x)
+x = np.array([i * 0.1 for i in range(1, 11)])
+y = np.array([func(xi) for xi in x])
+print('x =', x)
+print('y =', y)
+def fun(a, x, y):
+    return a[0] + a[1] * x - y 
+a0 = np.array([1, 1]) 
+res_lsq = least_squares(fun, x0=a0, args=(x, y))
+print("a0 = %.2f, a1 = %.2f" % tuple(res_lsq.x))
+f = lambda x: res_lsq.x[0] + res_lsq.x[1] * x
+x_p = np.linspace(min(x), max(x), 20)
+y_p = f(x_p)
+plt.figure(figsize=(8, 6))
+plt.plot(x, y, 'o', label='f(x)') 
+plt.plot(x_p, y_p, 'b', label='Апроксимована пряма')  
+plt.title("МНК апроксимація прямою")
+plt.xlabel('x')
+plt.ylabel('f(x)')
+plt.legend()
+plt.grid(True)
+plt.show()
+#Аналітичні розрахунки
+import numpy as np
+def f(x):
+    return np.sin(4 * x)
+i = np.array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+xi = np.array([0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0])
+print("   i   |   xі   |   yі")
+for idx, x in zip(i, xi):
+    y = f(x)
