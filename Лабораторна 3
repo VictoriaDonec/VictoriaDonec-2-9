@@ -1,0 +1,48 @@
+#1
+import numpy as np
+from scipy.misc import derivative
+def f(x):
+    return pow(x, 4) + 2 * pow(x, 3) + 2 * pow(x, 2) + 6 * x - 5
+def newton_method(a, b, eps):
+    df2 = derivative(f, b, n=2)
+    if (f(b) * df2 > 0):
+        xi = b
+    else:
+        xi = a
+    df = derivative(f, xi, n=1)
+    xi_1 = xi - f(xi) / df
+    while (abs(xi_1 - xi) > eps):
+        xi = xi_1
+        xi_1 = xi - f(xi) / df
+    return xi_1
+a = -3
+b = -2
+eps = 0.001
+result = newton_method(a, b, eps)
+print("Розв'язування рівняння методом Ньютона x =", result)
+#2
+import numpy as np
+from scipy.misc import derivative
+def f(x):
+    return pow(x, 4) + 2 * pow(x, 3) + 2 * pow(x, 2) + 6 * x - 5
+def komb(a, b, eps):
+    if (derivative(f, a, n=1) * derivative(f, a, n=2) > 0):
+        a0 = a
+        b0 = b
+    else:
+        a0 = b
+        b0 = a
+    ai = a0
+    bi = b0
+    while abs(ai - bi) > eps:
+        ai_1 = ai - f(ai) * (bi - ai) / (f(bi) - f(ai))
+        bi_1 = bi - f(bi) / derivative(f, bi, n=1)
+        ai = ai_1
+        bi = bi_1
+    x = (ai_1 + bi_1) / 2
+    return x
+a = -3
+b = -2
+eps = 0.0001
+result = komb(a, b, eps)
+print("Розв'язування рівняння методом комбінацій x =", result)
